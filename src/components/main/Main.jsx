@@ -12,11 +12,22 @@ export default function Main() {
         let item = JSON.parse(localStorage.getItem(i))
         items.push(item)
     }
+
+    function deleteTask(id){
+        console.log('success')
+        localStorage.removeItem(id)
+        setTokenOfSend(!tokenOfSend) 
+    }
     
+    function deleteAll (){
+        localStorage.clear()
+        setTokenOfSend(!tokenOfSend)        
+    }
+
     return (
         <div className="container-xl">
             <Form setTokenOfSend={setTokenOfSend} tokenOfSend={tokenOfSend}/>
-            <Table items={items} setTokenOfSend={setTokenOfSend} tokenOfSend={tokenOfSend}/>
+            <Table items={items} deleteAll={deleteAll} deleteTask={deleteTask}/>
         </div>
     )
 }
