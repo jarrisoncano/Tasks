@@ -7,16 +7,16 @@ export default function Main() {
     let items = []
     let [tokenOfSend, setTokenOfSend] = useState(false)
 
-    for (let i = 1; i <= localStorage.length; i++) {
+    for (let i = 0; i < localStorage.length; i++) {
     
-        let item = JSON.parse(localStorage.getItem(i))
+        let key = localStorage.key(i)
+        let item = JSON.parse(localStorage.getItem(key))
         items.push(item)
     }
 
     function deleteTask(id){
-        console.log('success')
         localStorage.removeItem(id)
-        setTokenOfSend(!tokenOfSend) 
+        setTokenOfSend(!tokenOfSend)
     }
     
     function deleteAll (){

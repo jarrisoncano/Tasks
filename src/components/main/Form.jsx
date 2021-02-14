@@ -14,7 +14,7 @@ export default function Form({ setTokenOfSend, tokenOfSend }) {
         name = inputNameRef.current
         description = inputDescriptionRef.current
 
-        if (name.value === "" || description.value === "") {
+        if (name.value === "") {
             setcheckedInputs(false)
         }
         else{
@@ -22,7 +22,7 @@ export default function Form({ setTokenOfSend, tokenOfSend }) {
 
             for(let i = 1; i<= localStorage.length; i++){
                 let item = JSON.parse(localStorage.getItem(i))
-                if(name.value === item.name || description.value === item.description) flag= false
+                if(name.value === item.name) flag= false
             }   
             
             if(flag === true) sendData()
@@ -39,6 +39,8 @@ export default function Form({ setTokenOfSend, tokenOfSend }) {
         }
 
         localStorage.setItem(dataForSave.id, JSON.stringify(dataForSave))
+        name.value=""
+        description.value=""
 
         setcheckedInputs(true)
         setTokenOfSend(!tokenOfSend)
@@ -56,7 +58,7 @@ export default function Form({ setTokenOfSend, tokenOfSend }) {
                     <span className="input-group-text">📝</span>
                     <input ref={inputDescriptionRef} type="text" className="form-control" placeholder="Description" aria-label="description" aria-describedby="basic-addon2" required maxLength="200"/>
                 </div>
-                {checkedInputs ? null : <div className="alert alert-danger" role="alert">Complete the form.</div>}  
+                {checkedInputs ? null : <div className="alert alert-danger" role="alert">Complete the form / Invalid task.</div>}  
                 <button type="button" className="btn btn-primary" onClick={() => checkData()}>Add Task</button>
             </form>
         </div>

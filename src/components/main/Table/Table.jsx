@@ -14,6 +14,9 @@ export default function Table(props) {
                         <th>
                             Description
                         </th>
+                        <th>
+                            
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
