@@ -20,8 +20,10 @@ export default function Form({ setTokenOfSend, tokenOfSend }) {
         else{
             let flag = true
 
-            for(let i = 1; i<= localStorage.length; i++){
-                let item = JSON.parse(localStorage.getItem(i))
+            for(let i = 0; i < localStorage.length; i++){
+
+                let key = localStorage.key(i)
+                let item = JSON.parse(localStorage.getItem(key))
                 if(name.value === item.name) flag= false
             }   
             
