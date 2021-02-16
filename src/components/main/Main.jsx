@@ -14,6 +14,8 @@ export default function Main() {
         items.push(item)
     }
 
+    items = items.sort((a,b)=>a.id > b.id ? 1 : -1)
+
     function deleteTask(id){
         localStorage.removeItem(id)
         setTokenOfSend(!tokenOfSend)
