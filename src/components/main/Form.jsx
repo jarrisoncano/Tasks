@@ -1,38 +1,27 @@
 import React, { useRef, useState } from 'react'
 
-export default function Form({ setTokenOfSend, tokenOfSend }) {
+export default function Form(props) {
 
     let [checkedInputs, setcheckedInputs] = useState(true)
-
-    let inputNameRef = useRef(null)
-    let inputDescriptionRef = useRef(null)
-    let name
-    let description
+    let inputNameRef = useRef(null), inputDescriptionRef = useRef(null)
+    let name, description
 
     function checkData() {
 
         name = inputNameRef.current
         description = inputDescriptionRef.current
 
-        if (name.value === "") {
-            setcheckedInputs(false)
-        }
-        else{
-            let flag = true
-              
-            if(flag === true) sendData()
-        }
+        if (name.value === "") setcheckedInputs(false)
+        else sendData()
     }
 
     function sendData(){
 
-        let keyf= 0
-        let keyid = 0
+        let keyf= 0,keyid = 0
 
         for(let i= 0; i < localStorage.length; i++){
 
             keyid = parseInt(localStorage.key(i))
-
             if(keyid > keyf) keyf = keyid
         }
 
@@ -43,11 +32,11 @@ export default function Form({ setTokenOfSend, tokenOfSend }) {
         }
         
         localStorage.setItem(keyf+1, JSON.stringify(dataForSave))
-        name.value=""
+        name.value="" 
         description.value=""
         
         setcheckedInputs(true)
-        setTokenOfSend(!tokenOfSend)
+        props.setTokenOfSend(!props.tokenOfSend)
     }
     
     return (
