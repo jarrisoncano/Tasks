@@ -11,7 +11,7 @@ export default function Main() {
     
         let key = localStorage.key(i)
         let item = JSON.parse(localStorage.getItem(key))
-        items.push(item)
+        if(item.id) items.push(item)
     }
 
     items = items.sort((a,b)=>a.id > b.id ? 1 : -1)
