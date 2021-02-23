@@ -1,11 +1,11 @@
-import React, {useState} from "react"
+import React, {useState, useRef} from "react"
 import Form from './Form'
 import Table from './Table/Table'
 
 export default function Main() {
-    //i need know how to have my git hub account here
     let items = []
     let [tokenOfSend, setTokenOfSend] = useState(false)
+    let inputNameRef = useRef(null), inputDescriptionRef = useRef(null)
 
     for (let i = 0; i < localStorage.length; i++) {
     
@@ -26,10 +26,19 @@ export default function Main() {
         setTokenOfSend(!tokenOfSend)        
     }
 
+    function editTask(id){
+        const task = JSON.parse(localStorage.getItem(id))
+        
+        inputNameRef.current.value = task.name
+        inputDescriptionRef.current.value = task.description
+        
+        deleteTask(id)        
+    }
+
     return (
         <div className="container-xl">
-            <Form setTokenOfSend={setTokenOfSend} tokenOfSend={tokenOfSend}/>
-            <Table items={items} deleteAll={deleteAll} deleteTask={deleteTask}/>
+            <Form setTokenOfSend={setTokenOfSend} tokenOfSend={tokenOfSend} inputNameRef={inputNameRef} inputDescriptionRef={inputDescriptionRef}/>
+            <Table items={items} deleteAll={deleteAll} deleteTask={deleteTask} editTask={editTask}/>
         </div>
     )
 }

@@ -7,6 +7,7 @@ export default function Table_tr(props) {
             <tr>
                 <td>{props.name}</td>
                 <td>{props.description}</td>
+                <td><button className="btn" onClick={()=>props.editTask(props.id)}>✏</button></td>
                 <td><button className="btn" onClick={()=>props.deleteTask(props.id)}>🗑️</button></td>
             </tr>
         </>

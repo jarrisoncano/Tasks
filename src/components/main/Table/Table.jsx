@@ -21,7 +21,7 @@ export default function Table(props) {
                 </thead>
                 <tbody>
                     {
-                        props.items.map(e => <Table_tr key={e.id} id={e.id} name={e.name} description={e.description} deleteTask={props.deleteTask}/>)
+                        props.items.map(e => <Table_tr key={e.id} id={e.id} name={e.name} description={e.description} deleteTask={props.deleteTask} editTask={props.editTask}/>)
                     }
                 </tbody>
             </table>
