@@ -1,44 +1,29 @@
-import React, {useState, useRef} from "react"
+import React, { useEffect } from 'react'
+import { db } from '../../Firebase'
 import Form from './Form'
 import Table from './Table/Table'
 
 export default function Main() {
-    let items = []
-    let [tokenOfSend, setTokenOfSend] = useState(false)
-    let inputNameRef = useRef(null), inputDescriptionRef = useRef(null)
+  const submit = async (value) => {
+    await db.collection('tasks').doc().set(value)
+  }
 
-    for (let i = 0; i < localStorage.length; i++) {
-    
-        let key = localStorage.key(i)
-        let item = JSON.parse(localStorage.getItem(key))
-        if(item.id) items.push(item)
-    }
+  //   const viee = async () => {
+  //     const querySnapshot = await db.collection('tasks').get()
 
-    items = items.sort((a,b)=>a.id > b.id ? 1 : -1)
+  //     querySnapshot.forEach((doc) => {
+  //       console.log(doc.data())
+  //     })
+  //   }
 
-    function deleteTask(id){
-        localStorage.removeItem(id)
-        setTokenOfSend(!tokenOfSend)
-    }
-    
-    function deleteAll (){
-        localStorage.clear()
-        setTokenOfSend(!tokenOfSend)        
-    }
+  //   useEffect(() => {
+  //     viee()
+  //   }, [])
 
-    function editTask(id){
-        const task = JSON.parse(localStorage.getItem(id))
-        
-        inputNameRef.current.value = task.name
-        inputDescriptionRef.current.value = task.description
-        
-        deleteTask(id)        
-    }
-
-    return (
-        <div className="container-xl">
-            <Form setTokenOfSend={setTokenOfSend} tokenOfSend={tokenOfSend} inputNameRef={inputNameRef} inputDescriptionRef={inputDescriptionRef}/>
-            <Table items={items} deleteAll={deleteAll} deleteTask={deleteTask} editTask={editTask}/>
-        </div>
-    )
+  return (
+    <div className='container-xl'>
+      <Form submit={submit} />
+      <Table />
+    </div>
+  )
 }

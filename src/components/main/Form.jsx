@@ -1,58 +1,60 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 
 export default function Form(props) {
+  const initialValues = {
+    name: '',
+    description: '',
+  }
 
-    let [checkedInputs, setcheckedInputs] = useState(true)
-    let name, description
+  let [values, setValues] = useState(initialValues)
 
-    function checkData() {
+  const handleInputChange = (e) => {
+    let { name, value } = e.target
+    setValues({ ...values, [name]: value })
+  }
 
-        name = props.inputNameRef.current
-        description = props.inputDescriptionRef.current
+  const submit = () => {
+    props.submit(values)
+    setValues(initialValues)
+  }
 
-        if (name.value === "") setcheckedInputs(false)
-        else sendData()
-    }
-
-    function sendData(){
-
-        let keyf= 0,keyid = 0
-
-        for(let i= 0; i < localStorage.length; i++){
-
-            keyid = parseInt(localStorage.key(i))
-            if(keyid > keyf) keyf = keyid
-        }
-
-        let dataForSave = {
-            "id": keyf+1,
-            "name": name.value,
-            "description": description.value
-        }
-        
-        localStorage.setItem(keyf+1, JSON.stringify(dataForSave))
-        name.value="" 
-        description.value=""
-        
-        setcheckedInputs(true)
-        props.setTokenOfSend(!props.tokenOfSend)
-    }
-    
-    return (
-        <div className="container-sm">
-            <form className=" mb-5 needs-validation" noValidate>
-                <h1 className="mb-5 mt-5">Add Task</h1>
-                <div className="input-group mb-4">
-                    <span className="input-group-text">💡</span>
-                    <input ref={props.inputNameRef} type="text" className="form-control" placeholder="Task Name" aria-label="name" aria-describedby="basic-addon1" required maxLength="80"/>
-                </div>
-                <div className="input-group mb-4">
-                    <span className="input-group-text">📝</span>
-                    <input ref={props.inputDescriptionRef} type="text" className="form-control" placeholder="Description" aria-label="description" aria-describedby="basic-addon2" required maxLength="400"/>
-                </div>
-                {checkedInputs ? null : <div className="alert alert-danger" role="alert">Complete the form.</div>}  
-                <button type="button" className="btn btn-primary" onClick={checkData} >Add Task</button>
-            </form>
+  return (
+    <div className='container-sm'>
+      <form className=' mb-5 needs-validation' noValidate>
+        <h1 className='mb-5 mt-5'>Add Task</h1>
+        <div className='input-group mb-4'>
+          <span className='input-group-text'>💡</span>
+          <input
+            type='text'
+            className='form-control'
+            placeholder='Task Name'
+            aria-label='name'
+            aria-describedby='basic-addon1'
+            name='name'
+            onBlur={handleInputChange}
+            maxLength='80'
+          />
         </div>
-    )
+        <div className='input-group mb-4'>
+          <span className='input-group-text'>📝</span>
+          <input
+            type='text'
+            className='form-control'
+            placeholder='Description'
+            aria-label='description'
+            aria-describedby='basic-addon2'
+            name='description'
+            onBlur={handleInputChange}
+            maxLength='400'
+          />
+        </div>
+        {/* <div className='alert alert-danger' role='alert'>
+          Complete the form.
+        </div> */}
+        <button type='button' className='btn btn-primary' onClick={submit}>
+          Add Task
+        </button>
+      </form>
+    </div>
+  )
 }
