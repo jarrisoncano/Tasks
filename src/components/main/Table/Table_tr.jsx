@@ -4,13 +4,20 @@ export default function Table_tr(props) {
   return (
     <>
       <tr>
-        <td></td>
-        <td></td>
+        <td>{props.name}</td>
+        <td>{props.description}</td>
         <td>
-          <button className='btn'>✏</button>
+          <button
+            className='btn'
+            onClick={() => props.updateTasks(props.value)}
+          >
+            ✏
+          </button>
         </td>
         <td>
-          <button className='btn'>🗑️</button>
+          <button className='btn' onClick={() => props.deleteTasks(props.id)}>
+            🗑️
+          </button>
         </td>
       </tr>
     </>

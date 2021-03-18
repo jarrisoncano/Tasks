@@ -1,21 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 export default function Form(props) {
-  const initialValues = {
-    name: '',
-    description: '',
-  }
-
-  let [values, setValues] = useState(initialValues)
-
   const handleInputChange = (e) => {
     let { name, value } = e.target
-    setValues({ ...values, [name]: value })
+    props.setValues({ ...props.values, [name]: value })
   }
 
-  const submit = () => {
-    props.submit(values)
-    setValues(initialValues)
+  const handleSubmit = (token) => {
+    props.submitTasks(token)
+    props.setValues({ name: '', description: '' })
   }
 
   return (
@@ -28,10 +21,9 @@ export default function Form(props) {
             type='text'
             className='form-control'
             placeholder='Task Name'
-            aria-label='name'
-            aria-describedby='basic-addon1'
             name='name'
-            onBlur={handleInputChange}
+            onChange={handleInputChange}
+            value={props.values.name}
             maxLength='80'
           />
         </div>
@@ -41,19 +33,33 @@ export default function Form(props) {
             type='text'
             className='form-control'
             placeholder='Description'
-            aria-label='description'
-            aria-describedby='basic-addon2'
             name='description'
-            onBlur={handleInputChange}
+            onChange={handleInputChange}
+            value={props.values.description}
             maxLength='400'
           />
         </div>
         {/* <div className='alert alert-danger' role='alert'>
           Complete the form.
         </div> */}
-        <button type='button' className='btn btn-primary' onClick={submit}>
-          Add Task
-        </button>
+
+        {props.handleButtonChange ? (
+          <button
+            type='button'
+            className='btn btn-success'
+            onClick={() => handleSubmit(true)}
+          >
+            Update Task
+          </button>
+        ) : (
+          <button
+            type='button'
+            className='btn btn-primary'
+            onClick={() => handleSubmit(false)}
+          >
+            Add Task
+          </button>
+        )}
       </form>
     </div>
   )

@@ -9,10 +9,21 @@ export default function Table(props) {
           <tr>
             <th>Name</th>
             <th>Description</th>
-            <th></th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {props.snapshot.map((e) => (
+            <Table_tr
+              key={e.id}
+              id={e.id}
+              value={e}
+              name={e.name}
+              description={e.description}
+              deleteTasks={props.deleteTasks}
+              updateTasks={props.updateTasks}
+            />
+          ))}
+        </tbody>
       </table>
       <div className='container d-flex justify-content-end'>
         <button className='btn btn-danger mb-5'>Delete All</button>
