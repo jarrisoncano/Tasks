@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function Form(props) {
+export default function Form (props) {
   const handleInputChange = (e) => {
-    let { name, value } = e.target
+    const { name, value } = e.target
     props.setValues({ ...props.values, [name]: value })
   }
 
@@ -43,23 +43,25 @@ export default function Form(props) {
           Complete the form.
         </div> */}
 
-        {props.handleButtonChange ? (
-          <button
-            type='button'
-            className='btn btn-success'
-            onClick={() => handleSubmit(true)}
-          >
-            Update Task
-          </button>
-        ) : (
-          <button
-            type='button'
-            className='btn btn-primary'
-            onClick={() => handleSubmit(false)}
-          >
-            Add Task
-          </button>
-        )}
+        {props.handleButtonChange
+          ? (
+            <button
+              type='button'
+              className='btn btn-success'
+              onClick={() => handleSubmit(true)}
+            >
+              Update Task
+            </button>
+            )
+          : (
+            <button
+              type='button'
+              className='btn btn-primary'
+              onClick={() => handleSubmit(false)}
+            >
+              Add Task
+            </button>
+            )}
       </form>
     </div>
   )

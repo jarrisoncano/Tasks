@@ -1,12 +1,16 @@
-import React from 'react'
-import Footer from './components/footer/Footer'
-import Main from './components/main/Main'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './Firebase'
+import 'Firebase/Firebase'
+
+import React from 'react'
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+
+import Main from './components/main/Main'
+import Footer from './components/footer/Footer'
 
 export default function App() {
   return (
     <>
+      <h1>Hello</h1>
       <Main />
       <Footer />
     </>
