@@ -43,11 +43,7 @@
     }
   },
   "lint-staged": {
-    "*.{js, jsx}": [
-      "eslint --quiet --fix"
-    ],
-    "*.{json,md,html}": [
-      "prettier --write"
-    ]
+    "*.{js,jsx}": "standard --fix",
+    "*.{css,md,html}": "prettier --write"
   }
 }
