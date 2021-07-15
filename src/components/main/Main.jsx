@@ -10,8 +10,6 @@ export default function Main () {
   const [handleChanges, setHandleChanges] = useState(false)
   const [handleButtonChange, setHandleButtonChange] = useState(false)
 
-  // let [idItem, setIdItem] = useState(null)
-
   const initialValues = {
     name: '',
     description: ''
