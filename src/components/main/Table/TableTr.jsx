@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function TableTr(props) {
+export default function TableTr (props) {
   return (
     <>
       <tr>

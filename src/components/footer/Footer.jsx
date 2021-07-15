@@ -1,4 +1,4 @@
-export default function Footer() {
+export default function Footer () {
   return (
     <nav className='navbar fixed-bottom bg-light'>
       <div className='container-sm d-flex justify-content-center'>

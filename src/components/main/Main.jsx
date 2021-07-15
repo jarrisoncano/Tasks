@@ -3,20 +3,20 @@ import { db } from '../../Firebase'
 import Form from './Form'
 import Table from './Table/Table'
 
-export default function Main() {
-  let initialSnapshot = []
-  let [snapshot, setSnapshot] = useState([])
+export default function Main () {
+  const initialSnapshot = []
+  const [snapshot, setSnapshot] = useState([])
 
-  let [handleChanges, setHandleChanges] = useState(false)
-  let [handleButtonChange, setHandleButtonChange] = useState(false)
+  const [handleChanges, setHandleChanges] = useState(false)
+  const [handleButtonChange, setHandleButtonChange] = useState(false)
 
   // let [idItem, setIdItem] = useState(null)
 
   const initialValues = {
     name: '',
-    description: '',
+    description: ''
   }
-  let [values, setValues] = useState(initialValues)
+  const [values, setValues] = useState(initialValues)
 
   const submitTasks = async (token) => {
     if (token) {
@@ -35,7 +35,7 @@ export default function Main() {
       .get()
       .then((res) => {
         res.forEach((doc) => {
-          let d = doc.data()
+          const d = doc.data()
           initialSnapshot.push({ ...d, id: doc.id })
         })
       })
