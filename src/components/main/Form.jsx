@@ -34,21 +34,20 @@ export default function Form (props) {
             maxLength='400'
           />
         </div>
-        {props.buttonType
-          ? (
-            <Button
-              text='Update Task'
-              handler={() => props.updateTask()}
-              className='btn-success'
-            />
-            )
-          : (
-            <Button
-              text='Add Task'
-              handler={() => props.submitTask()}
-              className=' btn-primary'
-            />
-            )}
+        {props.buttonType && (
+          <Button
+            text='Update Task'
+            handler={() => props.updateTask()}
+            className='btn-success'
+          />
+        )}
+        {props.buttonType && (
+          <Button
+            text='Add Task'
+            handler={() => props.submitTask()}
+            className=' btn-primary'
+          />
+        )}
       </form>
     </div>
   )
