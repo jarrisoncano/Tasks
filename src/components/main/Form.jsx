@@ -41,7 +41,7 @@ export default function Form (props) {
             className='btn-success'
           />
         )}
-        {props.buttonType && (
+        {!props.buttonType && (
           <Button
             text='Add Task'
             handler={() => props.submitTask()}
