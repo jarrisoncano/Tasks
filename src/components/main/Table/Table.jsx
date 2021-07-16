@@ -1,7 +1,10 @@
-import React from 'react'
 import TableTr from './TableTr'
 
 export default function Table (props) {
+  const updateTask = (task) => {
+    props.setButtonType(true)
+    props.setInputsValues(task)
+  }
   return (
     <div className='container-sm mb-5'>
       <table className='table  table-hover mb-5'>
@@ -12,15 +15,12 @@ export default function Table (props) {
           </tr>
         </thead>
         <tbody>
-          {props.snapshot.map((e) => (
+          {props.snapshot.map((task) => (
             <TableTr
-              key={e.id}
-              id={e.id}
-              value={e}
-              name={e.name}
-              description={e.description}
-              deleteTasks={props.deleteTasks}
-              updateTasks={props.updateTasks}
+              key={task.id}
+              task={task}
+              deleteTask={props.deleteTask}
+              updateTask={updateTask}
             />
           ))}
         </tbody>

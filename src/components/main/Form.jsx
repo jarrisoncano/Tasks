@@ -1,14 +1,9 @@
-import React from 'react'
+import Button from 'components/GlobalsComponents/Button'
 
 export default function Form (props) {
   const handleInputChange = (e) => {
     const { name, value } = e.target
-    props.setValues({ ...props.values, [name]: value })
-  }
-
-  const handleSubmit = (token) => {
-    props.submitTasks(token)
-    props.setValues({ name: '', description: '' })
+    props.setInputsValues({ ...props.inputsValues, [name]: value })
   }
 
   return (
@@ -23,7 +18,7 @@ export default function Form (props) {
             placeholder='Task Name'
             name='name'
             onChange={handleInputChange}
-            value={props.values.name}
+            value={props.inputsValues.name}
             maxLength='80'
           />
         </div>
@@ -35,32 +30,24 @@ export default function Form (props) {
             placeholder='Description'
             name='description'
             onChange={handleInputChange}
-            value={props.values.description}
+            value={props.inputsValues.description}
             maxLength='400'
           />
         </div>
-        {/* <div className='alert alert-danger' role='alert'>
-          Complete the form.
-        </div> */}
-
-        {props.handleButtonChange
+        {props.buttonType
           ? (
-            <button
-              type='button'
-              className='btn btn-success'
-              onClick={() => handleSubmit(true)}
-            >
-              Update Task
-            </button>
+            <Button
+              text='Update Task'
+              handler={() => props.updateTask()}
+              className='btn-success'
+            />
             )
           : (
-            <button
-              type='button'
-              className='btn btn-primary'
-              onClick={() => handleSubmit(false)}
-            >
-              Add Task
-            </button>
+            <Button
+              text='Add Task'
+              handler={() => props.submitTask()}
+              className=' btn-primary'
+            />
             )}
       </form>
     </div>

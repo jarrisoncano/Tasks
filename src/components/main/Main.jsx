@@ -1,72 +1,76 @@
-import React, { useEffect, useState } from 'react'
-import { db } from '../../Firebase'
+import { useEffect, useState } from 'react'
+import { db } from 'services/firebase'
 import Form from './Form'
 import Table from './Table/Table'
 
 export default function Main () {
-  const initialSnapshot = []
-  const [snapshot, setSnapshot] = useState([])
-
-  const [handleChanges, setHandleChanges] = useState(false)
-  const [handleButtonChange, setHandleButtonChange] = useState(false)
-
-  const initialValues = {
+  const initialInputsValues = {
     name: '',
     description: ''
   }
-  const [values, setValues] = useState(initialValues)
+  const [inputsValues, setInputsValues] = useState(initialInputsValues)
+  const [snapshot, setSnapshot] = useState([])
+  const [buttonType, setButtonType] = useState(false)
 
-  const submitTasks = async (token) => {
-    if (token) {
-      await db.collection('tasks').doc(values.id).update(values)
-      setHandleButtonChange(false)
-      setHandleChanges(!handleChanges)
-    } else {
-      await db.collection('tasks').doc().set(values)
-      setHandleChanges(!handleChanges)
-    }
+  const submitTask = () => {
+    db.collection('tasks')
+      .doc()
+      .set(inputsValues)
+      .then(() => {
+        setInputsValues(initialInputsValues)
+        getTasks()
+      })
   }
 
-  const getTasks = async () => {
-    await db
-      .collection('tasks')
+  const getTasks = () => {
+    const initialSnapshot = []
+
+    db.collection('tasks')
       .get()
       .then((res) => {
-        res.forEach((doc) => {
-          const d = doc.data()
-          initialSnapshot.push({ ...d, id: doc.id })
-        })
+        res.forEach((doc) =>
+          initialSnapshot.push({ ...doc.data(), id: doc.id })
+        )
       })
-    setSnapshot(initialSnapshot)
+      .then(() => setSnapshot(initialSnapshot))
   }
 
-  const deleteTasks = async (id) => {
-    await db.collection('tasks').doc(id).delete()
-    setHandleChanges(!handleChanges)
+  const deleteTask = (id) => {
+    db.collection('tasks')
+      .doc(id)
+      .delete()
+      .then(() => getTasks())
   }
 
-  const updateTasks = (v) => {
-    setValues(v)
-    setHandleButtonChange(true)
+  const updateTask = () => {
+    db.collection('tasks')
+      .doc(inputsValues.id)
+      .update(inputsValues)
+      .then(() => {
+        setInputsValues(initialInputsValues)
+        getTasks()
+      })
+    setButtonType(false)
   }
 
   useEffect(() => {
     getTasks()
-  }, [handleChanges])
+  }, [])
 
   return (
     <div className='container-xl'>
       <Form
-        submitTasks={submitTasks}
-        handleButtonChange={handleButtonChange}
-        setHandleButtonChange={setHandleButtonChange}
-        values={values}
-        setValues={setValues}
+        buttonType={buttonType}
+        submitTask={submitTask}
+        updateTask={updateTask}
+        inputsValues={inputsValues}
+        setInputsValues={setInputsValues}
       />
       <Table
         snapshot={snapshot}
-        deleteTasks={deleteTasks}
-        updateTasks={updateTasks}
+        setButtonType={setButtonType}
+        setInputsValues={setInputsValues}
+        deleteTask={deleteTask}
       />
     </div>
   )
